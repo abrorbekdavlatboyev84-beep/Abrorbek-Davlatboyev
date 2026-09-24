@@ -1,0 +1,26 @@
+{
+  "name": "task-manager-app",
+  "version": "1.0.0",
+  "description": "Real project starter with Express and SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "express",
+    "sqlite",
+    "node",
+    "task-manager"
+  ],
+  "author": "Abrorbek",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "connect-sqlite3": "^0.9.18",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.19.0",
+    "sqlite3": "^5.1.7"
+  }
+}

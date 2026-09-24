@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kirish</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-page">
+    <div class="auth-box">
+      <h1>Kirish</h1>
+      <% if (error) { %>
+        <div class="alert"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="/login" class="auth-form">
+        <label>
+          Email
+          <input type="email" name="email" placeholder="admin@demo.com" required />
+        </label>
+
+        <label>
+          Parol
+          <input type="password" name="password" placeholder="******" required />
+        </label>
+
+        <button type="submit">Kirish</button>
+      </form>
+
+      <p class="auth-switch">
+        Hisob yo'qmi?
+        <a href="/register">Ro'yxatdan o'tish</a>
+      </p>
+
+      <div class="demo-box">
+        <strong>Demo hisoblar:</strong>
+        <p>Admin: admin@demo.com / admin123</p>
+        <p>User: user@demo.com / user123</p>
+      </div>
+    </div>
+  </body>
+</html>

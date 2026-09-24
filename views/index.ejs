@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vazifalar menejeri</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div>
+          <p class="eyebrow">Real loyiha</p>
+          <h1>Vazifalar menejeri</h1>
+        </div>
+      </header>
+
+      <section class="card form-card">
+        <h2>Yangi vazifa qo’shish</h2>
+        <form action="/tasks" method="POST" class="task-form">
+          <label>
+            Vazifa nomi
+            <input type="text" name="title" placeholder="Masalan: React darsini o'rganish" required />
+          </label>
+
+          <label>
+            Tavsif
+            <textarea name="description" rows="3" placeholder="Qisqa izoh yozing..."></textarea>
+          </label>
+
+          <button type="submit">Qo’shish</button>
+        </form>
+      </section>
+
+      <section class="card list-card">
+        <h2>Vazifalar ro’yxati</h2>
+
+        <% if (tasks.length === 0) { %>
+          <p class="empty-state">Hozircha vazifa yo'q. Yangi vazifa qo'shing.</p>
+        <% } else { %>
+          <ul class="task-list">
+            <% tasks.forEach(task => { %>
+              <li class="task-item <%= task.completed ? 'completed' : '' %>">
+                <div class="task-text">
+                  <h3><%= task.title %></h3>
+                  <% if (task.description) { %>
+                    <p><%= task.description %></p>
+                  <% } %>
+                </div>
+
+                <div class="task-actions">
+                  <form action="/tasks/<%= task.id %>/toggle" method="POST">
+                    <button type="submit" class="toggle-btn">
+                      <%= task.completed ? 'Qaytarish' : 'Bajarildi' %>
+                    </button>
+                  </form>
+
+                  <form action="/tasks/<%= task.id %>/delete" method="POST">
+                    <button type="submit" class="delete-btn">O'chirish</button>
+                  </form>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </section>
+    </div>
+  </body>
+</html>

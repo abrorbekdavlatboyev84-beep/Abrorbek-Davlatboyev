@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: task-manager-app
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SECURE_COOKIES
+        value: "true"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /var/data/tasks.db
+      - key: DATA_DIR
+        value: /var/data
+    disk:
+      name: task-manager-data
+      mountPath: /var/data
+      sizeGB: 1

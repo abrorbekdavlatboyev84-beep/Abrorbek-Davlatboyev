@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container admin-wrap">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Admin panel</p>
+          <h1>Foydalanuvchilar va vazifalar</h1>
+        </div>
+
+        <div class="top-actions">
+          <a href="/dashboard" class="nav-btn">Dashboard</a>
+          <form method="POST" action="/logout">
+            <button type="submit" class="logout-btn">Chiqish</button>
+          </form>
+        </div>
+      </header>
+
+      <section class="stats-grid admin-stats">
+        <div class="stat-card">
+          <span>Foydalanuvchilar</span>
+          <strong><%= users.length %></strong>
+        </div>
+        <div class="stat-card success">
+          <span>Vazifalar</span>
+          <strong><%= tasks.length %></strong>
+        </div>
+        <div class="stat-card warning">
+          <span>Kutilmoqda</span>
+          <strong><%= tasks.filter(task => !task.completed).length %></strong>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Foydalanuvchilar</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ism</th>
+                <th>Email</th>
+                <th>Rol</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach(user => { %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.role %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Barcha vazifalar</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Foydalanuvchi</th>
+                <th>Vazifa</th>
+                <th>Prioritet</th>
+                <th>Holat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% tasks.forEach(task => { %>
+                <tr>
+                  <td><%= task.user_name %></td>
+                  <td><%= task.title %></td>
+                  <td><%= task.priority || 'medium' %></td>
+                  <td><%= task.completed ? 'Bajarildi' : 'Jarayonda' %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

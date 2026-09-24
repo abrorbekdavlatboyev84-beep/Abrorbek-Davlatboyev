@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ro'yxatdan o'tish</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-page">
+    <div class="auth-box">
+      <h1>Ro'yxatdan o'tish</h1>
+      <% if (error) { %>
+        <div class="alert"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="/register" class="auth-form">
+        <label>
+          Ism
+          <input type="text" name="name" placeholder="Ismingiz" required />
+        </label>
+
+        <label>
+          Email
+          <input type="email" name="email" placeholder="email@example.com" required />
+        </label>
+
+        <label>
+          Parol
+          <input type="password" name="password" placeholder="Kamida 6 ta belgi" required />
+        </label>
+
+        <button type="submit">Ro'yxatdan o'tish</button>
+      </form>
+
+      <p class="auth-switch">
+        Allaqachon hisobingiz bormi?
+        <a href="/login">Kirish</a>
+      </p>
+    </div>
+  </body>
+</html>

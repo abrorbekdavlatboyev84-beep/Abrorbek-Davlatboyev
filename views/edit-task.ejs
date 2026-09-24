@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vazifani tahrirlash</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container narrow-container">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Vazifa sozlamalari</p>
+          <h1>Vazifani tahrirlash</h1>
+        </div>
+        <a href="/dashboard" class="nav-btn">Orqaga</a>
+      </header>
+
+      <section class="card form-card">
+        <% if (error) { %>
+          <div class="alert"><%= error %></div>
+        <% } %>
+
+        <form action="/tasks/<%= task.id %>/edit" method="POST" class="task-form">
+          <label>
+            Vazifa nomi
+            <input type="text" name="title" value="<%= task.title %>" required />
+          </label>
+
+          <div class="inline-fields">
+            <label>
+              Prioritet
+              <select name="priority">
+                <option value="low" <%= task.priority === 'low' ? 'selected' : '' %>>Past</option>
+                <option value="medium" <%= !task.priority || task.priority === 'medium' ? 'selected' : '' %>>O'rta</option>
+                <option value="high" <%= task.priority === 'high' ? 'selected' : '' %>>Yuqori</option>
+              </select>
+            </label>
+
+            <label>
+              Muddat
+              <input type="date" name="due_date" value="<%= task.due_date || '' %>" />
+            </label>
+          </div>
+
+          <label>
+            Tavsif
+            <textarea name="description" rows="5"><%= task.description || '' %></textarea>
+          </label>
+
+          <div class="form-actions">
+            <a href="/dashboard" class="cancel-btn">Bekor qilish</a>
+            <button type="submit">Saqlash</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

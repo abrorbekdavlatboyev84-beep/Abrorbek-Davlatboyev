@@ -1,0 +1,6 @@
+node_modules/
+tasks.db
+*.db-shm
+*.db-wal
+.env
+.DS_Store

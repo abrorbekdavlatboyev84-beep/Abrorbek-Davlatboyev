@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Foydalanuvchi paneli</p>
+          <h1>Salom, <%= user.name %>!</h1>
+        </div>
+
+        <div class="top-actions">
+          <% if (user.role === 'admin') { %>
+            <a href="/admin" class="nav-btn">Admin panel</a>
+          <% } %>
+
+          <form method="POST" action="/logout">
+            <button type="submit" class="logout-btn">Chiqish</button>
+          </form>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <span>Umumiy</span>
+          <strong><%= stats.total %></strong>
+        </div>
+        <div class="stat-card success">
+          <span>Bajarilgan</span>
+          <strong><%= stats.completed %></strong>
+        </div>
+        <div class="stat-card warning">
+          <span>Kutilmoqda</span>
+          <strong><%= stats.pending %></strong>
+        </div>
+        <div class="stat-card danger">
+          <span>Yuqori prioritet</span>
+          <strong><%= stats.highPriority %></strong>
+        </div>
+      </section>
+
+      <section class="card form-card">
+        <h2>Yangi vazifa qo'shish</h2>
+        <form action="/tasks" method="POST" class="task-form">
+          <label>
+            Vazifa nomi
+            <input type="text" name="title" placeholder="Masalan: Loyiha uchun sprint" required />
+          </label>
+
+          <div class="inline-fields">
+            <label>
+              Prioritet
+              <select name="priority">
+                <option value="low">Past</option>
+                <option value="medium" selected>O'rta</option>
+                <option value="high">Yuqori</option>
+              </select>
+            </label>
+
+            <label>
+              Muddat
+              <input type="date" name="due_date" />
+            </label>
+          </div>
+
+          <label>
+            Tavsif
+            <textarea name="description" rows="3" placeholder="Qisqa izoh..."></textarea>
+          </label>
+
+          <button type="submit">Qo'shish</button>
+        </form>
+      </section>
+
+      <section class="card list-card">
+        <h2>Vazifalar ro'yxati</h2>
+
+        <form method="GET" action="/dashboard" class="search-bar">
+          <input type="search" name="search" value="<%= search %>" placeholder="Vazifalarni qidiring..." aria-label="Vazifalarni qidiring" />
+          <input type="hidden" name="filter" value="<%= filter %>" />
+          <button type="submit" class="search-btn">Qidirish</button>
+          <% if (search) { %>
+            <a href="/dashboard?filter=<%= filter %>" class="clear-link">Tozalash</a>
+          <% } %>
+        </form>
+
+        <div class="filter-bar">
+          <a href="/dashboard?filter=all&search=<%= encodeURIComponent(search) %>" class="filter-link <%= filter === 'all' ? 'active' : '' %>">Barchasi</a>
+          <a href="/dashboard?filter=pending&search=<%= encodeURIComponent(search) %>" class="filter-link <%= filter === 'pending' ? 'active' : '' %>">Kutilmoqda</a>
+          <a href="/dashboard?filter=completed&search=<%= encodeURIComponent(search) %>" class="filter-link <%= filter === 'completed' ? 'active' : '' %>">Bajarilgan</a>
+        </div>
+
+        <% if (tasks.length === 0) { %>
+          <p class="empty-state">Hozircha vazifa yo'q.</p>
+        <% } else { %>
+          <ul class="task-list">
+            <% tasks.forEach(task => { %>
+              <li class="task-item <%= task.completed ? 'completed' : '' %>">
+                <div class="task-text">
+                  <div class="task-header-row">
+                    <h3><%= task.title %></h3>
+                    <span class="priority-badge <%= task.priority || 'medium' %>"><%= task.priority || 'medium' %></span>
+                  </div>
+
+                  <% if (task.description) { %>
+                    <p><%= task.description %></p>
+                  <% } %>
+
+                  <% if (task.due_date) { %>
+                    <p class="due-date">Muddat: <%= new Date(task.due_date).toLocaleDateString('uz-UZ') %></p>
+                  <% } %>
+                </div>
+
+                <div class="task-actions">
+                  <form action="/tasks/<%= task.id %>/toggle" method="POST">
+                    <button type="submit" class="toggle-btn">
+                      <%= task.completed ? 'Qaytarish' : 'Bajarildi' %>
+                    </button>
+                  </form>
+
+                  <a href="/tasks/<%= task.id %>/edit" class="edit-btn">Tahrirlash</a>
+
+                  <form action="/tasks/<%= task.id %>/delete" method="POST">
+                    <button type="submit" class="delete-btn">O'chirish</button>
+                  </form>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </section>
+    </div>
+  </body>
+</html>
